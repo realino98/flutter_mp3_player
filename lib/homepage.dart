@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mp3_player/now_playing.dart';
+import 'package:mp3_player/playlist.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,100 +10,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _playerProgress = 0.2;
+  List<Widget> _element = [
+    Playlist(),
+    NowPLaying(),
+  ];
+
+  int _pageIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(),
       appBar: AppBar(),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Column(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Text("Now Playing"),
-                    Text(
-                      "Title",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 34,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              //Cover Art
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 400,
-                  width: 400,
-                  color: Colors.grey,
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                "Artist",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Divider(),
-              //Progress Bar
-              Slider(
-                min: 0,
-                max: 100,
-                value: _playerProgress,
-                onChanged: (value) {
-                  setState(() {
-                    _playerProgress = value;
-                  });
-                },
-              ),
-              Divider(),
-              //Action Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.shuffle),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.skip_previous),
-                    onPressed: () {},
-                    iconSize: 75,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.play_arrow),
-                    onPressed: () {},
-                    iconSize: 75,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.skip_next),
-                    onPressed: () {},
-                    iconSize: 75,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.favorite),
-                    onPressed: () {},
-                  ),
-                ],
-              )
-            ],
-          );
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.playlist_play),
+            label: "Playlist",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: "Now Playing",
+          ),
+        ],
+        currentIndex: _pageIndex,
+        onTap: (value) {
+          setState(() {
+            _pageIndex = value;
+          });
         },
       ),
+      body: _element.elementAt(_pageIndex),
     );
   }
 }
