@@ -1,3 +1,4 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 
 class NowPLaying extends StatefulWidget {
@@ -55,15 +56,17 @@ class _NowPLayingState extends State<NowPLaying> {
             ),
             Divider(),
             //Progress Bar
-            Slider(
-              min: 0,
-              max: 100,
-              value: _playerProgress,
-              onChanged: (value) {
-                setState(() {
-                  _playerProgress = value;
-                });
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ProgressBar(
+                progress: Duration(milliseconds: 1000),
+                buffered: Duration(milliseconds: 2000),
+                total: Duration(milliseconds: 5000),
+                timeLabelLocation: TimeLabelLocation.sides,
+                onSeek: (duration) {
+                  print("User selected a new time : $duration");
+                },
+              ),
             ),
             Divider(),
             //Action Buttons
