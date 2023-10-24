@@ -23,8 +23,11 @@ class _HomePageState extends State<HomePage> {
     return Consumer<MusicPlayerProvider>(
       builder: (context, value, child) => Scaffold(
         drawer: Drawer(),
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.grey[200],
+        ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.grey[200],
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.playlist_play),

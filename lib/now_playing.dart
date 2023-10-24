@@ -24,6 +24,9 @@ class _NowPLayingState extends State<NowPLaying> {
               Center(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text("Now Playing"),
                     Text(
                       cur_song.title,
