@@ -1,4 +1,5 @@
 class Song {
+  final int song_id;
   final String title;
   final List<String> artists;
   final int duration;
@@ -7,6 +8,7 @@ class Song {
   final int times_listened;
 
   Song({
+    required this.song_id,
     required this.title,
     required this.artists,
     required this.duration,
@@ -16,6 +18,7 @@ class Song {
   });
   factory Song.fromMap(Map<String, dynamic> song) {
     return Song(
+      song_id: song["song_id"],
       album_cover: song["album_cover"],
       title: song["title"],
       artists: song["artists"],
