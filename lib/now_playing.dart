@@ -12,7 +12,6 @@ class NowPLaying extends StatefulWidget {
 }
 
 class _NowPLayingState extends State<NowPLaying> {
-  var _playerProgress = 0.2;
   @override
   Widget build(BuildContext context) {
     return Consumer<MusicPlayerProvider>(

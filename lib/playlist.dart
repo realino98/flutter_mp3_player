@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mp3_player/now_playing.dart';
 import 'package:mp3_player/provider/state_provider.dart';
 import 'package:provider/provider.dart';
 

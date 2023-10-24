@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mp3_player/models/song_model.dart';
-import 'package:mp3_player/now_playing.dart';
 
 class MusicPlayerProvider extends ChangeNotifier {
   List<Song> _songs = [
@@ -26,7 +25,16 @@ class MusicPlayerProvider extends ChangeNotifier {
       song_id: 2,
       title: "Love Story",
       artists: ["Taylor Swift"],
-      duration: 230,
+      duration: 330,
+      favorite: true,
+      album_cover: "",
+      times_listened: 0,
+    ),
+    Song(
+      song_id: 3,
+      title: "All of Me",
+      artists: ["John Legend"],
+      duration: 320,
       favorite: true,
       album_cover: "",
       times_listened: 0,

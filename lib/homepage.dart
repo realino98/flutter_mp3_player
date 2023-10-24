@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
     NowPLaying(),
   ];
 
-  int _pageIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Consumer<MusicPlayerProvider>(
