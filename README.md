@@ -1,16 +1,12 @@
-# mp3_player
+# Flutter MP3 Player UI
+Flutter Project MP3 Player UI with basic function
+play, pause, next/prev, favorite, shuffle
 
-A new Flutter project.
+## Screenshots
 
-## Getting Started
+![Now Playing Page](https://github.com/realino98/flutter_mp3_player/assets/63583418/9580b997-5673-441a-8d83-cb0a75f71c83)
 
-This project is a starting point for a Flutter application.
+![Playlist Page](https://github.com/realino98/flutter_mp3_player/assets/63583418/a01d0c52-a88c-4e66-93e4-637b914b1170)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Thank You,
+Follow for more!
