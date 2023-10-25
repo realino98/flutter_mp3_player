@@ -21,10 +21,33 @@ class Playlist extends StatelessWidget {
                 value.setPageState(1);
                 value.setNowPlaying(song.song_id);
               },
-              leading: Icon(Icons.album),
+              leading: song.album_cover != ""
+                  ? Image.network(
+                      song.album_cover,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    )
+                  : Icon(
+                      Icons.album,
+                    ),
               title: Text(song.title),
-              subtitle: Text(song.artists[0]),
-              trailing: Text(song_duration),
+              subtitle: Row(
+                children: [
+                  Text(song.artists[0]),
+                  Text(" - "),
+                  Text(song_duration),
+                ],
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  value.toggleFavorite(song.song_id);
+                },
+                icon: Icon(
+                  Icons.favorite,
+                  color: song.favorite ? Colors.red : Colors.grey,
+                ),
+              ),
             );
           },
         );

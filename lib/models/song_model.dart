@@ -3,7 +3,7 @@ class Song {
   final String title;
   final List<String> artists;
   final int duration;
-  final bool favorite;
+  bool favorite;
   final String album_cover;
   final int times_listened;
 
@@ -19,7 +19,7 @@ class Song {
   factory Song.fromMap(Map<String, dynamic> song) {
     return Song(
       song_id: song["song_id"],
-      album_cover: song["album_cover"],
+      album_cover: song["album_cover"] ?? "",
       title: song["title"],
       artists: song["artists"],
       duration: song["duration"],

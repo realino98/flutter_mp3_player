@@ -41,16 +41,27 @@ class _NowPLayingState extends State<NowPLaying> {
                 height: 50,
               ),
               //Cover Art
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 400,
-                  width: 400,
-                  color: Colors.grey,
+              Card(
+                // borderRadius: BorderRadius.circular(20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  //set border radius more than 50% of height and width to make circle
                 ),
+                elevation: 50,
+                child: cur_song.album_cover != ""
+                    ? Image.network(
+                        cur_song.album_cover,
+                        width: 400,
+                        height: 400,
+                        fit: BoxFit.cover,
+                      )
+                    : Icon(
+                        Icons.album,
+                        size: 400,
+                      ),
               ),
               SizedBox(
-                height: 50,
+                height: 25,
               ),
               Text(
                 cur_song.artists[0],
@@ -59,19 +70,19 @@ class _NowPLayingState extends State<NowPLaying> {
                 ),
               ),
               SizedBox(
-                height: 50,
+                height: 60,
               ),
               Divider(),
               //Progress Bar
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: ProgressBar(
-                  progress: Duration(milliseconds: 1000),
-                  buffered: Duration(milliseconds: 2000),
-                  total: Duration(milliseconds: 5000),
+                  progress: Duration(seconds: value.cur_time),
+                  // buffered: Duration(milliseconds: 2000),
+                  total: Duration(seconds: cur_song.duration),
                   timeLabelLocation: TimeLabelLocation.sides,
                   onSeek: (duration) {
-                    print("User selected a new time : $duration");
+                    value.setCurTime(duration.inSeconds);
                   },
                 ),
               ),
@@ -81,40 +92,46 @@ class _NowPLayingState extends State<NowPLaying> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.shuffle),
+                    icon: Icon(Icons.shuffle_rounded),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: Icon(Icons.skip_previous),
+                    icon: Icon(Icons.skip_previous_rounded),
                     onPressed: () {
                       value.prevSong();
                     },
                     iconSize: 75,
                   ),
                   IconButton(
-                    icon: value.isPlaying
-                        ? Icon(Icons.pause)
-                        : Icon(Icons.play_arrow),
+                    icon: Icon(value.isPlaying
+                        ? Icons.pause_rounded
+                        : Icons.play_arrow_rounded),
                     onPressed: () {
                       value.setIsPlaying();
+                      if (value.isPlaying) {
+                        setState(() {
+                          value.startTime(cur_song.song_id);
+                          print(value.cur_time);
+                        });
+                      }
                     },
                     iconSize: 75,
                   ),
                   IconButton(
-                    icon: Icon(Icons.skip_next),
+                    icon: Icon(Icons.skip_next_rounded),
                     onPressed: () {
                       value.nextSong();
                     },
                     iconSize: 75,
                   ),
                   IconButton(
-                    icon: cur_song.favorite
-                        ? Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          )
-                        : Icon(Icons.favorite),
-                    onPressed: () {},
+                    icon: Icon(
+                      Icons.favorite,
+                      color: cur_song.favorite ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () {
+                      value.toggleFavorite(cur_song.song_id);
+                    },
                   ),
                 ],
               )
