@@ -42,23 +42,27 @@ class _NowPLayingState extends State<NowPLaying> {
               ),
               //Cover Art
               Card(
-                // borderRadius: BorderRadius.circular(20),
+                elevation: 50,
+
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   //set border radius more than 50% of height and width to make circle
                 ),
-                elevation: 50,
-                child: cur_song.album_cover != ""
-                    ? Image.network(
-                        cur_song.album_cover,
-                        width: 400,
-                        height: 400,
-                        fit: BoxFit.cover,
-                      )
-                    : Icon(
-                        Icons.album,
-                        size: 400,
-                      ),
+                // elevation: 50,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: cur_song.album_cover != ""
+                      ? Image.network(
+                          cur_song.album_cover,
+                          width: 400,
+                          height: 400,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.album,
+                          size: 400,
+                        ),
+                ),
               ),
               SizedBox(
                 height: 25,
@@ -92,8 +96,14 @@ class _NowPLayingState extends State<NowPLaying> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.shuffle_rounded),
-                    onPressed: () {},
+                    icon: Icon(
+                      Icons.shuffle_rounded,
+                      color:
+                          value.shuffleEnable ? Colors.grey[800] : Colors.grey,
+                    ),
+                    onPressed: () {
+                      value.toggleShuffle();
+                    },
                   ),
                   IconButton(
                     icon: Icon(Icons.skip_previous_rounded),
@@ -107,11 +117,10 @@ class _NowPLayingState extends State<NowPLaying> {
                         ? Icons.pause_rounded
                         : Icons.play_arrow_rounded),
                     onPressed: () {
-                      value.setIsPlaying();
+                      value.playPauseToggle();
                       if (value.isPlaying) {
                         setState(() {
                           value.startTime(cur_song.song_id);
-                          print(value.cur_time);
                         });
                       }
                     },

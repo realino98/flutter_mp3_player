@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mp3_player/models/song_model.dart';
@@ -52,33 +53,50 @@ class MusicPlayerProvider extends ChangeNotifier {
   bool _isPlaying = false;
   // bool _isPlaying = timer == null ? false : timer!.isActive;
   int _cur_time = 0;
+  bool _shuffleEnable = false;
 
   get page_state => _page_state;
   get now_playing_id => _now_playing_id;
   get isPlaying => _isPlaying;
   get songs => _songs;
   get cur_time => _cur_time;
+  get shuffleEnable => _shuffleEnable;
 
   setPageState(int number) {
     _page_state = number;
     notifyListeners();
   }
 
-  setNowPlaying(int id) {
-    _now_playing_id = id;
+  setNowPlaying(int song_id) {
+    if (_now_playing_id != song_id) {
+      _now_playing_id = song_id;
+      _isPlaying = true;
+      startTime(song_id);
+      resetTime();
+    } else {
+      _page_state = 1;
+    }
+
     notifyListeners();
   }
 
-  setIsPlaying() {
+  playPauseToggle() {
     _isPlaying = !_isPlaying;
     notifyListeners();
   }
 
   nextSong() {
-    if (_now_playing_id == _songs.length - 1) {
-      _now_playing_id = 0;
+    var rnd = Random();
+
+    if (!_shuffleEnable) {
+      if (_now_playing_id == _songs.length - 1) {
+        _now_playing_id = 0;
+      } else {
+        _now_playing_id += 1;
+      }
     } else {
-      _now_playing_id += 1;
+      _now_playing_id = rnd.nextInt(_songs.length);
+      print(_now_playing_id);
     }
     _isPlaying = true;
     _cur_time = 0;
@@ -97,20 +115,28 @@ class MusicPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  toggleShuffle() {
+    _shuffleEnable = !_shuffleEnable;
+    print(_shuffleEnable);
+    notifyListeners();
+  }
+
   toggleFavorite(int song_id) {
     _songs[song_id].favorite = !_songs[song_id].favorite;
     notifyListeners();
   }
 
   startTime(int song_id) {
-    Timer.periodic(Duration(seconds: 1), (_) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       if (isPlaying) {
         _cur_time++;
-        if (_cur_time == _songs[song_id].duration) {
+        if (_cur_time > _songs[song_id].duration) {
           nextSong();
         }
+      } else {
+        timer.cancel();
       }
-      print(_cur_time);
+      // print(_cur_time);
       notifyListeners();
     });
   }
